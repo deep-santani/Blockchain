@@ -1,0 +1,78 @@
+<html>
+    <body>
+        <div>
+            <input type="text" id="amount">
+            <p id='balance'></p>
+            <button id='deposit'>Deposit</button>
+            <button id='withdraw'>Withdraw</button>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+
+        <script>
+            var contract;
+
+            $(document).ready(function()
+            {
+                web3 = new Web3(web.currentProvider)
+
+
+                var address = "0x97cfA8B2640fb1302A3375236aa35d60221B232D";
+
+                var abi = [
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "int256",
+				"name": "amt",
+				"type": "int256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "int256",
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+                contract = new Web3.eth.contract(abi,address); 
+
+                contract.method.getBalance().call().then(function(bal)
+                {
+                    $('#balance').html(bal);
+                })
+            })
+        </script>
+    </body>
+</html>
